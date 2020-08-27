@@ -1,5 +1,6 @@
 body {
     font-family: 'Yanone Kaffeesatz', sans-serif;
+    color: blue
 }
 
 h1 {
@@ -7,7 +8,14 @@ h1 {
     font-size: 2rem;
 }
 
-.column {
+.row {
+    width: 25rem;
+    margin: 0px auto;
+    display: flex;
+    justify-content: center;
+}
+
+.grid-column {
     width: 3.57rem;
     height: 3.57rem;
     margin: 0px;
@@ -18,17 +26,22 @@ h1 {
     font-size: 80px;
 }
 
-.row {
-    width: 25rem;
+.grid-row {
     margin: 0px auto;
     display: flex;
     justify-content: center;
 }
 
+.arrow-grid {
+    width: 3.57rem;
+    height: 3.57rem;
+    margin: 0px;
+}
+
 .dot {
     height: 2rem;
     width: 2rem;
-    background-color: #fff;
+    background-color: white;
     border-radius: 50%;
   }
 
