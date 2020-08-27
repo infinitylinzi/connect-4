@@ -4,14 +4,230 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Connect 4</title>
+    <script src="https://kit.fontawesome.com/956e8aed18.js" crossorigin="anonymous"></script>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link href="main.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
-    <h1>Connect 4</h1>
-    <h2>Scores/winner message</h2>
+    <div class="container">
+      <div class="row" id="heading">
+        <h1 class="display-2">Connect 4</h1>
+        <h2 class="display-4"><span class="text-danger">Red: 2 </span>| <span class="text-warning">Yellow: 4</span></h2>
+      </div>
 
-<!--grid for board here-->
+      <!-- arrows to add pieces -->
+      <div class="row text-center">
+      <div class="row d-inline-flex justify-content-around mt-3 mb-1">
+          <span><i class="fas fa-arrow-alt-circle-down fa-2x arrow-colour"></i></span>
+          <span><i class="fas fa-arrow-alt-circle-down fa-2x arrow-colour"></i></span>
+          <span><i class="fas fa-arrow-alt-circle-down fa-2x arrow-colour"></i></span>
+          <span><i class="fas fa-arrow-alt-circle-down fa-2x arrow-colour"></i></span>
+          <span><i class="fas fa-arrow-alt-circle-down fa-2x arrow-colour"></i></span>
+          <span><i class="fas fa-arrow-alt-circle-down fa-2x arrow-colour"></i></span>
+          <span><i class="fas fa-arrow-alt-circle-down fa-2x arrow-colour"></i></span>
+      </div>
+    </div>
 
-<!--radio buttons to indicate turn-->
+      <!--grid for board here-->
+      <div id="grid">
+        <div class="row" id="row-0">
+          <div class="column" id="row-0-column-0">
+            <span class="dot"></span>
+          </div>
+          <div class="column" id="row-0-column-1">
+            <span class="dot"></span>
+          </div>
+          <div class="column" id="row-0-column-2">
+            <span class="dot"></span>
+          </div>
+          <div class="column" id="row-0-column-3">
+            <span class="dot"></span>
+          </div>
+          <div class="column" id="row-0-column-4">
+            <span class="dot"></span>
+          </div>
+          <div class="column" id="row-0-column-5">
+            <span class="dot"></span>
+          </div>
+          <div class="column" id="row-0-column-6">
+            <span class="dot"></span>
+          </div>
+        </div>
 
+        <div class="row" id="row-1">
+          <div class="column" id="row-1-column-0">
+            <span class="dot"></span>
+          </div>
+          <div class="column" id="row-1-column-1">
+            <span class="dot"></span>
+          </div>
+          <div class="column" id="row-1-column-2">
+            <span class="dot"></span>
+          </div>
+          <div class="column" id="row-1-column-3">
+            <span class="dot"></span>
+          </div>
+          <div class="column" id="row-1-column-4">
+            <span class="dot"></span>
+          </div>
+          <div class="column" id="row-1-column-5">
+            <span class="dot"></span>
+          </div>
+          <div class="column" id="row-1-column-6">
+            <span class="dot"></span>
+          </div>
+        </div>
+
+        <div class="row" id="row-2">
+          <div class="column" id="row-2-column-0">
+            <span class="dot"></span>
+          </div>
+          <div class="column" id="row-2-column-1">
+            <span class="dot"></span>
+          </div>
+          <div class="column" id="row-2-column-2">
+            <span class="dot"></span>
+          </div>
+          <div class="column" id="row-2-column-3">
+            <span class="dot"></span>
+          </div>
+          <div class="column" id="row-2-column-4">
+            <span class="dot"></span>
+          </div>
+          <div class="column" id="row-2-column-5">
+            <span class="dot"></span>
+          </div>
+          <div class="column" id="row-2-column-6">
+            <span class="dot"></span>
+          </div>
+        </div>
+
+        <div class="row" id="row-3">
+          <div class="column" id="row-3-column-0">
+            <span class="dot"></span>
+          </div>
+          <div class="column" id="row-3-column-1">
+            <span class="dot"></span>
+          </div>
+          <div class="column" id="row-3-column-2">
+            <span class="dot"></span>
+          </div>
+          <div class="column" id="row-3-column-3">
+            <span class="dot"></span>
+          </div>
+          <div class="column" id="row-3-column-4">
+            <span class="dot"></span>
+          </div>
+          <div class="column" id="row-3-column-5">
+            <span class="dot"></span>
+          </div>
+          <div class="column" id="row-4-column-6">
+            <span class="dot"></span>
+          </div>
+        </div>
+
+        <div class="row" id="row-4">
+          <div class="column" id="row-4-column-0">
+            <span class="dot"></span>
+          </div>
+          <div class="column" id="row-4-column-1">
+            <span class="dot"></span>
+          </div>
+          <div class="column" id="row-4-column-2">
+            <span class="dot"></span>
+          </div>
+          <div class="column" id="row-4-column-3">
+            <span class="dot"></span>
+          </div>
+          <div class="column" id="row-4-column-4">
+            <span class="dot"></span>
+          </div>
+          <div class="column" id="row-4-column-5">
+            <span class="dot"></span>
+          </div>
+          <div class="column" id="row-4-column-6">
+            <span class="dot"></span>
+          </div>
+        </div>
+
+        <div class="row" id="row-5">
+          <div class="column" id="row-5-column-0">
+            <span class="dot"></span>
+          </div>
+          <div class="column" id="row-5-column-1">
+            <span class="dot"></span>
+          </div>
+          <div class="column" id="row-5-column-2">
+            <span class="dot"></span>
+          </div>
+          <div class="column" id="row-5-column-3">
+            <span class="dot"></span>
+          </div>
+          <div class="column" id="row-5-column-4">
+            <span class="dot"></span>
+          </div>
+          <div class="column" id="row-5-column-5">
+            <span class="dot"></span>
+          </div>
+          <div class="column" id="row-5-column-6">
+            <span class="dot"></span>
+          </div>
+        </div>
+      </div>
+
+      <!--radio buttons to indicate turn-->
+      <div class="row p-4" id="buttons">
+
+        <div class="row p-3 d-inline-flex justify-content-around">
+            <!-- <div class="form-check p-2">
+                <input type="radio" id="playerRed" name="turn" class="form-check-input">
+                <label class="form-check-label" for="playerRed">Red</label>
+
+              </div>
+              <div class="form-check p-2">
+                <input type="radio" id="playerYellow" name="turn" class="form-check-input">
+                <label class="form-check-label" for="playerYellow">Yellow</label>
+              </div> -->
+              <span class="circle-red"></span>
+              <span class="circle-yellow"></span>
+
+        </div>
+        <!--reset/play again-->
+        <div class="row d-inline-flex justify-content-around my-3">
+          <button class="btn btn-lg btn-primary">New Game</button>
+          <button class="btn btn-lg btn-primary">Reset</button>
+        </div>
+    </div>
+
+
+      <div id="footer">
+          <div class="row mt-3">
+              <p>Copyright ©️ Linzi 2020</p>
+              <!-- make date dynamic!!! -->
+          </div>
+        <!--copyright-->
+      </div>
+    </div>
+
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>

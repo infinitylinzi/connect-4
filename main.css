@@ -1,0 +1,47 @@
+.column {
+    width: 3.57rem;
+    height: 3.57rem;
+    margin: 0px;
+    background-color: blue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 80px;
+}
+
+.row {
+    width: 25rem;
+    margin: 0px auto;
+    display: flex;
+    justify-content: center;
+}
+
+.dot {
+    height: 2rem;
+    width: 2rem;
+    background-color: #fff;
+    border-radius: 50%;
+  }
+
+  .circle-red {
+    height: 3.8rem;
+    width: 3.8rem;
+    background-color: red;
+    border-radius: 50%;
+    padding: 0.2rem;
+    border: 0.4rem;
+    border-style: solid;
+    border-color: blue
+  }
+
+  .circle-yellow {
+    height: 3.8rem;
+    width: 3.8rem;
+    background-color: yellow;
+    border-radius: 50%;
+  }
+
+  .arrow-colour:hover {
+      color: red;
+    /* color: yellow; */
+  }
