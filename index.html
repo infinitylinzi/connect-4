@@ -4,7 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Connect 4</title>
-    <script src="https://kit.fontawesome.com/956e8aed18.js" crossorigin="anonymous"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz:wght@300;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/956e8aed18.js"
+      crossorigin="anonymous"
+    ></script>
     <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -16,22 +23,39 @@
   <body>
     <div class="container">
       <div class="row" id="heading">
-        <h1 class="display-2">Connect 4</h1>
-        <h2 class="display-4"><span class="text-danger">Red: 2 </span>| <span class="text-warning">Yellow: 4</span></h2>
+        <h1 class="display-2 mt-3">Connect 4</h1>
+        <h2 class="display-4">
+          <span class="text-danger">Red: 2 </span>|
+          <span class="text-warning">Yellow: 4</span>
+        </h2>
       </div>
 
       <!-- arrows to add pieces -->
       <div class="row text-center">
-      <div class="row d-inline-flex justify-content-around mt-3 mb-1">
-          <span><i class="fas fa-arrow-alt-circle-down fa-2x arrow-colour"></i></span>
-          <span><i class="fas fa-arrow-alt-circle-down fa-2x arrow-colour"></i></span>
-          <span><i class="fas fa-arrow-alt-circle-down fa-2x arrow-colour"></i></span>
-          <span><i class="fas fa-arrow-alt-circle-down fa-2x arrow-colour"></i></span>
-          <span><i class="fas fa-arrow-alt-circle-down fa-2x arrow-colour"></i></span>
-          <span><i class="fas fa-arrow-alt-circle-down fa-2x arrow-colour"></i></span>
-          <span><i class="fas fa-arrow-alt-circle-down fa-2x arrow-colour"></i></span>
+        <div class="row d-inline-flex justify-content-around mt-3 mb-1">
+          <span
+            ><i class="fas fa-arrow-alt-circle-down fa-2x arrow-colour"></i
+          ></span>
+          <span
+            ><i class="fas fa-arrow-alt-circle-down fa-2x arrow-colour"></i
+          ></span>
+          <span
+            ><i class="fas fa-arrow-alt-circle-down fa-2x arrow-colour"></i
+          ></span>
+          <span
+            ><i class="fas fa-arrow-alt-circle-down fa-2x arrow-colour"></i
+          ></span>
+          <span
+            ><i class="fas fa-arrow-alt-circle-down fa-2x arrow-colour"></i
+          ></span>
+          <span
+            ><i class="fas fa-arrow-alt-circle-down fa-2x arrow-colour"></i
+          ></span>
+          <span
+            ><i class="fas fa-arrow-alt-circle-down fa-2x arrow-colour"></i
+          ></span>
+        </div>
       </div>
-    </div>
 
       <!--grid for board here-->
       <div id="grid">
@@ -182,9 +206,8 @@
 
       <!--radio buttons to indicate turn-->
       <div class="row p-4" id="buttons">
-
         <div class="row p-3 d-inline-flex justify-content-around">
-            <!-- <div class="form-check p-2">
+          <!-- <div class="form-check p-2">
                 <input type="radio" id="playerRed" name="turn" class="form-check-input">
                 <label class="form-check-label" for="playerRed">Red</label>
 
@@ -193,23 +216,26 @@
                 <input type="radio" id="playerYellow" name="turn" class="form-check-input">
                 <label class="form-check-label" for="playerYellow">Yellow</label>
               </div> -->
-              <span class="circle-red"></span>
-              <span class="circle-yellow"></span>
-
+          <span class="circle-red"></span>
+          <span class="circle-yellow"></span>
         </div>
         <!--reset/play again-->
         <div class="row d-inline-flex justify-content-around my-3">
           <button class="btn btn-lg btn-primary">New Game</button>
           <button class="btn btn-lg btn-primary">Reset</button>
         </div>
-    </div>
-
+      </div>
 
       <div id="footer">
-          <div class="row mt-3">
-              <p>Copyright ©️ Linzi 2020</p>
-              <!-- make date dynamic!!! -->
-          </div>
+        <div class="row mt-3">
+          <p>
+            Copyright ©️ Linzi
+            <script type="text/javascript">
+              document.write(new Date().getFullYear());
+            </script>
+          </p>
+          <!-- make date dynamic!!! -->
+        </div>
         <!--copyright-->
       </div>
     </div>
