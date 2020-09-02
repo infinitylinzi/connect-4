@@ -38,10 +38,17 @@ h1 {
     margin: 0px;
 }
 
-.dot {
+.whitedot {
     height: 2rem;
     width: 2rem;
     background-color: white;
+    border-radius: 50%;
+  }
+
+  .reddot {
+    height: 2rem;
+    width: 2rem;
+    background-color: red;
     border-radius: 50%;
   }
 

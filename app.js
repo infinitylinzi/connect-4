@@ -1,72 +1,111 @@
 //function to place a piece
 //when arrow clicked piece appears at last empty position in that coloumn
 
+let numRows = 6
+let numColumns = 7
 
-function placePiece(){
+drawGrid();
 
-    function handleClick(){
+const arrowButtons = $(".arrow-grid")
 
-        //detect which arrow has been clicked
-        function handleClick(arrowClicked){
+const arrowArray = Array.from(arrowButtons)
 
-            const rows = document.getElementsByClassName("grid-row")
+for(let i=0; i<arrowArray.length; i++){
+  
+  arrowArray[i].addEventListener('click', function(){
+    let arrowButton = i
+    
+    arrowClick(arrowButton, event)
+    
+  })
+}
 
-            for(let i=0; i<rows.length; i++){
-                let columnToPlace = document.querySelectorAll("row-" +i + "-column-" + arrowClicked)
+function arrowClick(arrowButton, event){
+  
+  event.preventDefault()
+  
+  const rows = numRows
+  
+  const columnArray = []
+  
+  for(let i=0; i<rows; i++){
+    let columnPosition = $("#row-" +i + "-column-" + arrowButton)
+    columnArray.push(columnPosition)
+    console.log(columnArray)
+  
+      }
 
-                for (let j=0; j<columnToPlace.length; j++){
-                    let nextSpace = document.getElementById("row-" +i + "-column-" + j+1)
+      for (let i=0; i<columnArray.length-1; i++){
+        //loop through positions. Get class of inner span element. If class === reddot, change class of current position
+        //to reddot and break
+        let thisSpace = columnArray[i]
+        let nextSpace = columnArray[i+1]
 
-                    if(nextSpace.style.color !== "white"){
-                        columnToPlace[j].style.color = "red"
-                    }
-                }
+        if($(nextSpace).children("span").hasClass("reddot")) {
+          $(thisSpace).children("span").removeClass("whitedot")
+          $(thisSpace).children("span").addClass("reddot")
+          break
+      }
 
-            }
         }
+        
+        const rowNumber = String(rows-1)
+        let currentRow = $("#row-"+rowNumber+"-column-"+arrowButton).children("span")
 
-        //loop through positions. On each iteration look ahead to next position. If not empty change colour of
-//current position to red/yellow depending on turn
+        $(currentRow).removeClass("whitedot")
+        $(currentRow).addClass("reddot")
+        
+        
+      }
 
-    //place event listener on arrows
-    const arrowArray = document.querySelectorAll("div.arrow-grid")
-    console.log(arrowArray)
 
-    for(let i=0; i<arrowArray.length; i++){
-      let arrowClicked = i
-      console.log(arrowClicked)
-      arrowArray[i].addEventListener('click', handleClick)
-    }
-
-}
-}
 
 //make grid of size x by y
 
-function drawGrid(x, y) {
-  let rows = x;
-  let columns = y;
+
+function drawGrid() {
+  let rows = numRows;
+  let columns = numColumns;
 
   for (let i = 0; i < columns; i++) {
-    let arrowButton = document.createElement("span");
-    arrowButton.innerHTML =
-      "<div class='arrow-grid'><i class='fas fa-arrow-alt-circle-down fa-2x arrow-colour'></i></div>";
-    document.getElementById("arrow-buttons").appendChild(arrowButton);
+//     let arrowButton = $(
+//       "<span><div class='arrow-grid'><i class='fas fa-arrow-alt-circle-down fa-2x arrow-colour'></i></div></span>"
+//     );
+
+let arrowButton = $("<span class='arrow-grid'></span").append("<div></div>").append("<i class='fas fa-arrow-alt-circle-down fa-2x arrow-colour'></i>")
+    $("#arrow-buttons").append(arrowButton);
   }
 
   for (let i = 0; i < rows; i++) {
-    let newRow = document.createElement("div");
-    newRow.setAttribute("class", "grid-row");
-    newRow.setAttribute("id", "row-" + i);
-    document.getElementById("grid").appendChild(newRow);
+    let rowNum = "row-" + i;
+
+    let newRow = $("<div></div>").attr("class", "grid-row").attr("id", rowNum);
+
+    $("#grid").append(newRow);
+
+
     for (let j = 0; j < columns; j++) {
-      let newColumn = document.createElement("div");
-      newColumn.innerHTML = "<span class='dot'></span>";
-      newColumn.setAttribute("class", "grid-column");
-      newColumn.setAttribute("id", "row-" + i + "-column-" + j);
-      document.getElementById("row-" + i).appendChild(newColumn);
+      //$(selector).attr({attribute:value, attribute:value,...})
+
+      let newColumn = $("<div></div>")
+        .attr("class", "grid-column")
+        .attr("id", "row-" + i + "-column-" + j)
+        .append($("<span class='whitedot'></span>"));
+
+      $("#row-" + i).append(newColumn);
+
     }
   }
 }
 
-drawGrid(3, 8);
+
+// function resetClick(){
+//   numRows=6
+//   numColumns=7
+//   drawGrid()
+// }
+
+
+//add event listener to reset button
+// document.getElementById("reset-btn").addEventListener('click', resetClick)
+
