@@ -21,57 +21,91 @@
     <link href="main.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
-    <div class="container">
-      <div class="row" id="heading">
-        <h1 class="display-2 mt-3">Connect 4</h1>
-        <h2 class="display-4">
-          <span class="text-danger">Red: 2 </span>|
-          <span class="text-warning">Yellow: 4</span>
-        </h2>
+    <div class="containerfluid d-flex">
+      <div class="row col-2 d-inline">
+        <form action="/app.js" method="POST">
+          <div class="row p-4">
+            <div class="col-6">
+              <label for="rows">Rows</label>
+              <input
+                type="text"
+                class="form-control"
+                id="rows"
+                placeholder="6"
+                name="rows"
+                value="6"
+              />
+            </div>
+            <div class="col-6">
+              <label for="columns">Columns</label>
+              <input
+                type="text"
+                class="form-control"
+                id="columns"
+                placeholder="7"
+                name="columns"
+                value="7"
+              />
+            </div>
+            <div class="mt-4">
+
+              <input class="btn btn-primary" type="submit" value="Submit" id="grid-submit">
+            </div>
+          </div>
+        </form>
       </div>
-
-      <!-- arrows to add pieces -->
-      <div class="row text-center">
-        <div class="grid-row d-inline-flex justify-content-around mt-3 mb-1" id="arrow-buttons">
-
+      <div class="row col-10 d-inline">
+        <!-- heading -->
+        <div class="row" id="heading">
+          <h1 class="display-2 mt-3">Connect 4</h1>
+          <h2 class="display-4">
+            <span class="text-danger">Red: 2 </span>|
+            <span class="text-warning">Yellow: 4</span>
+          </h2>
         </div>
-      </div>
 
-      <!--grid for board here-->
-      <div id="grid">
-
-      </div>
-
-      <!--radio buttons to indicate turn-->
-      <div class="row p-4" id="buttons">
-        <div class="row p-3 d-inline-flex justify-content-around">
-
-          <span class="circle-red"></span>
-          <span class="circle-yellow"></span>
+        <!-- arrows to add pieces -->
+        <div class="row text-center">
+          <div
+            class="grid-row d-inline-flex justify-content-around mt-3 mb-1"
+            id="arrow-buttons"
+          ></div>
         </div>
-        <!--reset/play again-->
-        <div class="row d-inline-flex justify-content-around my-3">
-          <button class="btn btn-lg btn-primary">New Game</button>
-          <button class="btn btn-lg btn-primary" id="reset-btn">Reset</button>
-        </div>
-      </div>
 
-      <div id="footer">
-        <div class="row mt-3">
-          <p>
-            Copyright ©️ Linzi
-            <script type="text/javascript">
-              document.write(new Date().getFullYear());
-            </script>
-          </p>
-          <!-- make date dynamic!!! -->
+        <!--grid for board here-->
+        <div id="grid"></div>
+        <div class="col-4"></div>
+
+        <!--radio buttons to indicate turn-->
+        <div class="row p-4" id="buttons">
+          <div class="row p-3 d-inline-flex justify-content-around">
+            <span class="circle-red"></span>
+            <span class="circle-yellow"></span>
+          </div>
+          <!--reset/play again-->
+          <div class="row d-inline-flex justify-content-around my-3">
+            <button class="btn btn-lg btn-primary">New Game</button>
+            <button class="btn btn-lg btn-primary" id="reset-btn">Reset</button>
+          </div>
         </div>
-        <!--copyright-->
+
+        <div id="footer">
+          <div class="row mt-3">
+            <p>
+              Copyright ©️ Linzi
+              <script type="text/javascript">
+                document.write(new Date().getFullYear());
+              </script>
+            </p>
+            <!-- make date dynamic!!! -->
+          </div>
+          <!--copyright-->
+        </div>
       </div>
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="app.js"></script>
+    <script src="app.js"></script>
     <script
       src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
       integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
