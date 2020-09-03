@@ -23,7 +23,7 @@
   <body>
     <div class="containerfluid d-flex">
       <div class="row col-2 d-inline">
-        <form action="/app.js" method="POST">
+        <form action="app.js" method="POST">
           <div class="row p-4">
             <div class="col-6">
               <label for="rows">Rows</label>
@@ -31,9 +31,8 @@
                 type="text"
                 class="form-control"
                 id="rows"
-                placeholder="6"
                 name="rows"
-                value="6"
+                value=""
               />
             </div>
             <div class="col-6">
@@ -42,18 +41,17 @@
                 type="text"
                 class="form-control"
                 id="columns"
-                placeholder="7"
                 name="columns"
-                value="7"
+                value=""
               />
             </div>
-            <div class="mt-4">
-
-              <input class="btn btn-primary" type="submit" value="Submit" id="grid-submit">
+            <div class="mt-4" id="grid-submit">
+  
+              <input class="btn btn-primary" type="submit" value="Submit">
             </div>
           </div>
+</div>
         </form>
-      </div>
       <div class="row col-10 d-inline">
         <!-- heading -->
         <div class="row" id="heading">
@@ -73,8 +71,10 @@
         </div>
 
         <!--grid for board here-->
-        <div id="grid"></div>
-        <div class="col-4"></div>
+        
+          <div id="grid"></div>
+
+      
 
         <!--radio buttons to indicate turn-->
         <div class="row p-4" id="buttons">
@@ -104,8 +104,8 @@
       </div>
     </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="app.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script
       src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
       integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

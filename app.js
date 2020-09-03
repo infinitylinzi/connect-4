@@ -5,20 +5,18 @@
 // when arrow clicked piece appears at last empty position in that coloumn
 
 function getFormSize() {
-  const userInputRows = $('#rows').value;
-  const userInputCols = $('#columns').value;
+  const userInputRows = $('input#rows').value;
+  const userInputCols = $('input#columns').value;
+  console.log(userInputCols);
 
-  $('#grid-submit').click((event) => {
-    event.preventDefault();
-    drawGrid(userInputRows, userInputCols);
-  });
+  drawGrid(userInputRows, userInputCols);
 }
 
 function arrowClick(arrowButton, event) {
   event.preventDefault();
 
   // define rows with user input rows
-
+  const rows = 6;
   const columnArray = [];
 
   for (let i = 0; i < rows; i++) {
@@ -48,15 +46,15 @@ function arrowClick(arrowButton, event) {
   $(currentRow).removeClass('whitedot');
   $(currentRow).addClass('reddot');
 }
-
+function drawArrows(columns) {
+  for (let i = 0; i < columns; i++) {
+    const arrowButton = $("<span class='arrow-grid'></span").append("<i class='fas fa-arrow-alt-circle-down fa-2x arrow-colour'></i>");
+    $('#arrow-buttons').append(arrowButton);
+  }
+}
 // make grid of size x by y
 
 function drawGrid(rows, columns) {
-  for (let i = 0; i < columns; i++) {
-    const arrowButton = $("<span class='arrow-grid'></span").append('<div></div>').append("<i class='fas fa-arrow-alt-circle-down fa-2x arrow-colour'></i>");
-    $('#arrow-buttons').append(arrowButton);
-  }
-
   for (let i = 0; i < rows; i++) {
     const rowNum = `row-${i}`;
 
@@ -69,6 +67,7 @@ function drawGrid(rows, columns) {
 
       const newColumn = $('<div></div>')
         .attr('id', `row-${i}-column-${j}`)
+        .attr('class', 'grid-column')
         .append($("<span class='whitedot'></span>"));
 
       $(`#row-${i}`).append(newColumn);
@@ -80,8 +79,16 @@ function drawGrid(rows, columns) {
 //   numRows = 6;
 //   numColumns = 7;
 // }
+window.onload = (event) => {
+  event.preventDefault();
+  drawGrid(6, 7);
+  drawArrows(7);
+};
 
-getFormSize();
+$('#grid-submit').submit((event) => {
+  event.preventDefault();
+  getFormSize();
+});
 
 // eslint-disable-next-line no-use-before-define
 
@@ -101,3 +108,12 @@ for (let i = 0; i < arrowArray.length; i++) {
 
 // add event listener to reset button
 // $('#reset-btn').click(resetClick);
+
+// eslint-disable-next-line no-global-assign
+module = module || {};
+module.exports = {
+  getFormSize,
+  arrowClick,
+  drawGrid,
+  drawArrows,
+};
