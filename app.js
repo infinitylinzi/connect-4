@@ -7,9 +7,23 @@
 function getFormSize() {
   const userInputRows = $('input#rows').value;
   const userInputCols = $('input#columns').value;
-  console.log(userInputCols);
 
   drawGrid(userInputRows, userInputCols);
+}
+
+function whoseTurn() {
+  // count number red pieces (class reddot)
+  // count number yellow pieces (class yellowdot)
+  // add red and yellow
+  const yellowPieces = $('.reddot').length;
+  const redPieces = $('.yellowdot').length;
+  const totalPieces = yellowPieces + redPieces;
+  console.log(yellowPieces);
+  // if total is even, turn=red, if total is odd, turn=yellow
+  if (totalPieces % 2 === 0) {
+    return 'red';
+  }
+  return 'yellow';
 }
 
 function arrowClick(arrowButton, event) {
@@ -22,9 +36,22 @@ function arrowClick(arrowButton, event) {
   for (let i = 0; i < rows; i++) {
     const columnPosition = $(`#row-${i}-column-${arrowButton}`);
     columnArray.push(columnPosition);
-    console.log(columnArray);
   }
 
+  placePiece(columnArray);
+}
+
+function placePiece(columnArray) {
+  const redOrYellow = whoseTurn();
+  console.log(redOrYellow);
+  let otherPlayer = '';
+  if (redOrYellow === 'red') {
+    otherPlayer = 'yellow';
+  } else {
+    otherPlayer = 'red';
+  }
+
+  const colNum = columnArray[0].attr('id').charAt(columnArray[0].attr('id').length - 1);
   for (let i = 0; i < columnArray.length - 1; i++) {
     // eslint-disable-next-line max-len
     // loop through positions. Get class of inner span element. If class === reddot,
@@ -33,19 +60,22 @@ function arrowClick(arrowButton, event) {
     const thisSpace = columnArray[i];
     const nextSpace = columnArray[i + 1];
 
-    if ($(nextSpace).children('span').hasClass('reddot')) {
+    if ($(nextSpace).children('span').hasClass(`${redOrYellow}dot`) || $(nextSpace).children('span').hasClass(`${otherPlayer}dot`)) {
       $(thisSpace).children('span').removeClass('whitedot');
-      $(thisSpace).children('span').addClass('reddot');
-      break;
+      $(thisSpace).children('span').addClass(`${redOrYellow}dot`);
+      // checkIfWinner();
+      return;
     }
   }
-
-  const rowNumber = String(rows - 1);
-  const currentRow = $(`#row-${rowNumber}-column-${arrowButton}`).children('span');
+  // get rows
+  const rowNumber = columnArray[columnArray.length - 1].attr('id').charAt(columnArray[0].attr('id').length - 10);
+  const currentRow = $(`#row-${rowNumber}-column-${colNum}`).children('span');
 
   $(currentRow).removeClass('whitedot');
-  $(currentRow).addClass('reddot');
+  $(currentRow).addClass(`${redOrYellow}dot`);
+//  checkIfWinner();
 }
+
 function drawArrows(columns) {
   for (let i = 0; i < columns; i++) {
     const arrowButton = $("<span class='arrow-grid'></span").append("<i class='fas fa-arrow-alt-circle-down fa-2x arrow-colour'></i>");
@@ -75,6 +105,14 @@ function drawGrid(rows, columns) {
   }
 }
 
+function checkIfWinner(){
+  // four same colour in a row
+
+  // four same colour in a column
+
+  // four same colour in a diagonal
+}
+
 // function resetClick() {
 //   numRows = 6;
 //   numColumns = 7;
@@ -83,37 +121,36 @@ window.onload = (event) => {
   event.preventDefault();
   drawGrid(6, 7);
   drawArrows(7);
-};
 
-$('#grid-submit').submit((event) => {
-  event.preventDefault();
-  getFormSize();
-});
-
-// eslint-disable-next-line no-use-before-define
-
-// eslint-disable-next-line no-undef
-const arrowButtons = $('.arrow-grid');
-
-const arrowArray = Array.from(arrowButtons);
-
-for (let i = 0; i < arrowArray.length; i++) {
-  arrowArray[i].addEventListener('click', () => {
-    const arrowButton = i;
-
-    // eslint-disable-next-line no-restricted-globals
-    arrowClick(arrowButton, event);
+  $('#grid-submit').submit((event) => {
+    event.preventDefault();
+    getFormSize();
   });
-}
+
+  // eslint-disable-next-line no-use-before-define
+
+  // eslint-disable-next-line no-undef
+  const arrowButtons = $('.arrow-grid');
+
+  const arrowArray = Array.from(arrowButtons);
+
+  for (let i = 0; i < arrowArray.length; i++) {
+    arrowArray[i].addEventListener('click', () => {
+      const arrowButton = i;
+      // eslint-disable-next-line no-restricted-globals
+      arrowClick(arrowButton, event);
+    });
+  }
+};
 
 // add event listener to reset button
 // $('#reset-btn').click(resetClick);
 
 // eslint-disable-next-line no-global-assign
-module = module || {};
-module.exports = {
-  getFormSize,
-  arrowClick,
-  drawGrid,
-  drawArrows,
-};
+// module = module || {};
+// module.exports = {
+//   getFormSize,
+//   arrowClick,
+//   drawGrid,
+//   drawArrows,
+// };

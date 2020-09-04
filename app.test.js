@@ -1,4 +1,5 @@
 const each = require('jest-each').default;
+
 const {
   drawArrows,
 } = require('./app');
@@ -10,19 +11,31 @@ describe('drawArrows', () => {
       // input
       [7],
       // output
-      [
-        ['<span class="arrow-grid"><i class="fas fa-arrow-alt-circle-down fa-2x arrow-colour" aria-hidden="true"></i></span>',
-          '<span class="arrow-grid"><i class="fas fa-arrow-alt-circle-down fa-2x arrow-colour" aria-hidden="true"></i></span>',
-          '<span class="arrow-grid"><i class="fas fa-arrow-alt-circle-down fa-2x arrow-colour" aria-hidden="true"></i></span>',
-          '<span class="arrow-grid"><i class="fas fa-arrow-alt-circle-down fa-2x arrow-colour" aria-hidden="true"></i></span>',
-          '<span class="arrow-grid"><i class="fas fa-arrow-alt-circle-down fa-2x arrow-colour" aria-hidden="true"></i></span>',
-          '<span class="arrow-grid"><i class="fas fa-arrow-alt-circle-down fa-2x arrow-colour" aria-hidden="true"></i></span>',
-          '<span class="arrow-grid"><i class="fas fa-arrow-alt-circle-down fa-2x arrow-colour" aria-hidden="true"></i></span>',
-        ],
+      ['<span class="arrow-grid"><i class="fas fa-arrow-alt-circle-down fa-2x arrow-colour" aria-hidden="true"></i></span>',
+        '<span class="arrow-grid"><i class="fas fa-arrow-alt-circle-down fa-2x arrow-colour" aria-hidden="true"></i></span>',
+        '<span class="arrow-grid"><i class="fas fa-arrow-alt-circle-down fa-2x arrow-colour" aria-hidden="true"></i></span>',
+        '<span class="arrow-grid"><i class="fas fa-arrow-alt-circle-down fa-2x arrow-colour" aria-hidden="true"></i></span>',
+        '<span class="arrow-grid"><i class="fas fa-arrow-alt-circle-down fa-2x arrow-colour" aria-hidden="true"></i></span>',
+        '<span class="arrow-grid"><i class="fas fa-arrow-alt-circle-down fa-2x arrow-colour" aria-hidden="true"></i></span>',
+        '<span class="arrow-grid"><i class="fas fa-arrow-alt-circle-down fa-2x arrow-colour" aria-hidden="true"></i></span>',
       ],
+    ],
+    // second input/output
+    [
+      // input
+      [1],
+      // output
+      ['<span class="arrow-grid"><i class="fas fa-arrow-alt-circle-down fa-2x arrow-colour" aria-hidden="true"></i></span>'],
+    ],
+    // third input/output
+    [
+      // input
+      [0],
+      // output
+      [],
     ],
   ]).it('when the input is "%s"', (input, expected) => {
     actual_result = drawArrows(input);
-    expected(actual_result).toStrictEqual(expected);
+    expect(actual_result).toStrictEqual(expected);
   });
 });

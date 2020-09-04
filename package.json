@@ -18,11 +18,15 @@
   "homepage": "https://github.com/infinitylinzi/connect-4#readme",
   "dependencies": {
     "jest": "^26.4.2",
-    "jest-each": "^26.4.2"
+    "jest-each": "^26.4.2",
+    "jquery": "^3.5.1"
   },
   "devDependencies": {
     "eslint": "^7.8.1",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-plugin-import": "^2.22.0"
-  }
+  },
+  "jest": {
+    "setupFiles": ["./setupJest.js"]
+}
 }

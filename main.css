@@ -52,6 +52,13 @@ h1 {
     border-radius: 50%;
   }
 
+  .yellowdot {
+    height: 2rem;
+    width: 2rem;
+    background-color: yellow;
+    border-radius: 50%;
+  }
+
   .circle-red {
     height: 3.8rem;
     width: 3.8rem;
