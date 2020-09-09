@@ -2,7 +2,7 @@
   "name": "connect-4",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
     "test": "jest"
   },
@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/infinitylinzi/connect-4#readme",
   "dependencies": {
+    "express": "^4.17.1",
     "jest": "^26.4.2",
     "jest-each": "^26.4.2",
     "jquery": "^3.5.1"
@@ -27,6 +28,8 @@
     "eslint-plugin-import": "^2.22.0"
   },
   "jest": {
-    "setupFiles": ["./setupJest.js"]
-}
+    "setupFiles": [
+      "./setupJest.js"
+    ]
+  }
 }
