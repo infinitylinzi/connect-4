@@ -22,39 +22,39 @@
   </head>
   <body>
     <div class="containerfluid d-flex">
-      <div class="row col-2 d-inline">
-        <form>
-          <div class="row p-4">
-            <div class="col-6">
+
+      <aside class="row col-3 d-inline">
+        <form action="" id="grid-submit">
+
+
               <div class="form-group">
-                <label for="rows">Rows</label>
-                <select class="form-control" id="rows">
-                  <option>4</option>
-                  <option>5</option>
-                  <option>6</option>
-                  <option>7</option>
-                  <option>8</option>
-                </select>
-              </div>
-            <!-- </div>
-            <div class="col-6"> -->
-              <label for="columns">Columns</label>
-              <select class="form-control" id="columns">
-                <option>4</option>
-                <option>5</option>
-                <option>6</option>
-                <option>7</option>
-                <option>8</option>
-              </select>
-            </div>
-            <div class="mt-4" id="grid-submit">
-  
-              <input id="grid-submit" class="btn btn-primary" type="submit" value="Submit">
-            </div>
-          </div>
+                  <label class="d-inline" for="rows">Rows</label>
+                  <select class="d-inline form-control" id="rows">
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="columns">Columns</label>
+                  <select class="form-control" id="columns">
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                  </select>
+                </div>
+
+              <button class="btn btn-primary" type="submit">Submit</button>
+
         </form>
-      </div>
-      <div class="row col-10 d-inline">
+      </aside>
+
+      <div class="row col-9 d-inline">
         <!-- heading -->
         <div class="row" id="heading">
           <h1 class="display-2 mt-3">Connect 4</h1>
