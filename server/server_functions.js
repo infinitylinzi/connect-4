@@ -2,7 +2,7 @@
 
 // const { gameState } = require("./browser_functions");
 
-function setBoardArray(rows, cols) {
+function setBoardArray(gameState, rows, cols) {
   const { boardArray } = gameState;
 
   for (let i = 0; i < rows; i++) {
@@ -13,12 +13,12 @@ function setBoardArray(rows, cols) {
   }
 }
 
-function whoseTurn() {
+function whoseTurn(gameState) {
   return gameState.nextTurn;
 }
 
-function placePiece(columnSelected) {
-  const redOrYellow = whoseTurn();
+function placePiece(gameState, columnSelected) {
+  const redOrYellow = whoseTurn(gameState);
 
   let otherPlayer = '';
   if (redOrYellow === 'red') {
@@ -35,21 +35,22 @@ function placePiece(columnSelected) {
     const nextSpace = gameState.boardArray[i + 1][colNum];
     if (nextSpace === redOrYellow || nextSpace === otherPlayer) {
       gameState.boardArray[i][colNum] = redOrYellow;
-      updateGrid(i + 1, colNum);
-      checkIfWinner(i + 1, colNum, cols);
-      nextTurn();
-      return;
+      // updateGrid(i + 1, colNum);
+      checkIfWinner(gameState, i + 1, colNum, cols);
+      nextTurn(gameState);
+      return gameState;
     }
   }
 
   const lastRow = gameState.boardArray[rows - 1];
   lastRow[colNum] = redOrYellow;
-  updateGrid(rows, colNum);
-  checkIfWinner(rows, colNum, cols);
-  nextTurn();
+  // updateGrid(rows, colNum);
+  checkIfWinner(gameState, rows, colNum, cols);
+  nextTurn(gameState);
+  return gameState;
 }
 
-function nextTurn() {
+function nextTurn(gameState) {
   if (gameState.nextTurn === 'red') {
     gameState.nextTurn = 'yellow';
   } else {
@@ -57,7 +58,7 @@ function nextTurn() {
   }
 }
 
-function checkIfWinner(row, col, totalCols) {
+function checkIfWinner(gameState, row, col, totalCols) {
   const totalRows = gameState.boardArray.length;
   const currentRow = gameState.boardArray[row - 1];
   console.log(row);

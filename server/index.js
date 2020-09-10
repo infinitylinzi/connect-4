@@ -6,8 +6,9 @@ const {
   nextTurn,
   checkIfWinner,
 } = require('./server_functions');
+const { parseJSON } = require('jquery');
 
-const gameState = {
+let gameState = {
   boardArray: [
     [null, null, null, null],
     [null, null, null, null],
@@ -34,6 +35,16 @@ app.get('/', (req, res) => {
 });
 
 app.get('/state', (req, res) => {
+  res.json(gameState);
+});
+
+// let body = {
+//   column: 0,
+// };
+
+app.post('/place_piece', (req, res) => {
+  gameState = placePiece(gameState, parseInt(req.body.column, 10));
+  console.log(gameState);
   res.json(gameState);
 });
 
