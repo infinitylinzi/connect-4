@@ -1,25 +1,11 @@
 /* eslint-disable no-plusplus */
 
-// const { gameState } = require("./browser_functions");
-
-function setBoardArray(gameState, rows, cols) {
-  const { boardArray } = gameState;
-
-  for (let i = 0; i < rows; i++) {
-    boardArray.push([]);
-    for (let j = 0; j < cols; j++) {
-      boardArray[i].push(null);
-    }
-  }
-}
-
 function whoseTurn(gameState) {
   return gameState.nextTurn;
 }
 
 function placePiece(gameState, columnSelected) {
   const redOrYellow = whoseTurn(gameState);
-
   let otherPlayer = '';
   if (redOrYellow === 'red') {
     otherPlayer = 'yellow';
@@ -35,18 +21,21 @@ function placePiece(gameState, columnSelected) {
     const nextSpace = gameState.boardArray[i + 1][colNum];
     if (nextSpace === redOrYellow || nextSpace === otherPlayer) {
       gameState.boardArray[i][colNum] = redOrYellow;
-      // updateGrid(i + 1, colNum);
       checkIfWinner(gameState, i + 1, colNum, cols);
       nextTurn(gameState);
+      gameState.lastPiece.row = i;
+      gameState.lastPiece.col = colNum;
       return gameState;
     }
   }
 
   const lastRow = gameState.boardArray[rows - 1];
   lastRow[colNum] = redOrYellow;
-  // updateGrid(rows, colNum);
+
   checkIfWinner(gameState, rows, colNum, cols);
   nextTurn(gameState);
+  gameState.lastPiece.row = rows - 1;
+  gameState.lastPiece.col = colNum;
   return gameState;
 }
 
@@ -61,7 +50,6 @@ function nextTurn(gameState) {
 function checkIfWinner(gameState, row, col, totalCols) {
   const totalRows = gameState.boardArray.length;
   const currentRow = gameState.boardArray[row - 1];
-  console.log(row);
   let winner;
 
   // horizontal win
@@ -92,13 +80,13 @@ function checkIfWinner(gameState, row, col, totalCols) {
       return winner;
     }
   }
-
+// use winner to increment score in gamestate (server)
+// send winner to browser to display win banner, update UI
   // diagonal win
 }
 
 if (typeof module !== 'undefined') {
   module.exports = {
-    setBoardArray,
     whoseTurn,
     placePiece,
     nextTurn,

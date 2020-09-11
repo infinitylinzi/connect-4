@@ -1,13 +1,30 @@
 let gameState = {};
 
 /* eslint-disable no-plusplus */
-$(document).ready((event) => {
+$(document).ready(() => {
   //   event.preventDefault();
   $.get('/state', (data) => {
     gameState = data;
-    console.log(gameState);
   });
-  getFormSize();
+
+  const formSize = getFormSize(gameState);
+
+  const body = {
+    rows: formSize.userInputRows,
+    cols: formSize.userInputCols,
+    boardArray: formSize.boardArray,
+  };
+  $.ajax({
+    method: 'POST',
+    url: '/board',
+    dataType: 'json',
+    data: JSON.stringify(body),
+    contentType: 'application/json',
+    error: (res) => {
+      // eslint-disable-next-line no-console
+      console.log(res);
+    },
+  });
 
   //   $("#grid-submit").submit(() => {
   //     event.preventDefault();
@@ -18,11 +35,10 @@ $(document).ready((event) => {
   // const arrowArray = Array.from(arrowButtons);
 
   for (let i = 0; i < arrowButtons.length; i++) {
+    // eslint-disable-next-line no-loop-func
     arrowButtons[i].addEventListener('click', () => {
       const arrowButton = i;
-      const body = {
-        column: arrowButton,
-      };
+      body.column = arrowButton;
       $.ajax({
         method: 'POST',
         url: '/place_piece',
@@ -30,9 +46,10 @@ $(document).ready((event) => {
         data: JSON.stringify(body),
         contentType: 'application/json',
         success: (res) => {
-          console.log(res);
+          updateGrid(res);
         },
         error: (res) => {
+          // eslint-disable-next-line no-console
           console.log(res);
         },
       });

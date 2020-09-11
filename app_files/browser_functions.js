@@ -11,17 +11,26 @@
 // };
 
 // client
-function getFormSize() {
-  const userInputRows = $('select#rows').val();
-  const userInputCols = $('select#columns').val();
-  gameState.boardArray = [];
+function updateBoard(gameState) {
+  const { row } = gameState.lastPiece;
+  const { col } = gameState.lastPiece;
 
-  setBoardArray(userInputRows, userInputCols);
-  drawNewGrid();
-  drawArrows();
+  updateGrid(gameState, row, col);
 }
 
-function setBoardArray(rows, cols) {
+function getFormSize(gameState) {
+  const userInputRows = $('select#rows').val();
+  const userInputCols = $('select#columns').val();
+  const localGameState = gameState;
+  localGameState.boardArray = [];
+
+  const boardArray = setBoardArray(localGameState, userInputRows, userInputCols);
+  drawNewGrid();
+  drawArrows();
+  return { boardArray, userInputRows, userInputCols };
+}
+
+function setBoardArray(gameState, rows, cols) {
   const { boardArray } = gameState;
 
   for (let i = 0; i < rows; i++) {
@@ -30,11 +39,15 @@ function setBoardArray(rows, cols) {
       boardArray[i].push(null);
     }
   }
+  // send this somewhere.... needs to go back to the server to update gamestate
+  return boardArray;
 }
 
-function updateGrid(row, column) {
-  const position = $(`#row-${row - 1}-column-${column}`).children('span');
-  const redOrYellow = whoseTurn();
+function updateGrid(gameState) {
+  const { row } = gameState.lastPiece;
+  const { col } = gameState.lastPiece;
+  const position = $(`#row-${row}-column-${col}`).children('span');
+  const redOrYellow = gameState.nextTurn;
 
   $(position).removeClass('whitedot');
   $(position).addClass(`${redOrYellow}dot`);
@@ -46,7 +59,9 @@ function drawArrows() {
   // $('.grid-row').remove('span.arrow-grid');
 
   for (let i = 0; i < columns; i++) {
-    const arrowButton = $("<span class='arrow-grid'></span").append("<i class='fas fa-arrow-alt-circle-down fa-2x arrow-colour'></i>");
+    const arrowButton = $("<span class='arrow-grid'></span").append(
+      "<i class='fas fa-arrow-alt-circle-down fa-2x arrow-colour'></i>",
+    );
     $('#arrow-buttons').append(arrowButton);
   }
 }
@@ -63,7 +78,9 @@ function drawNewGrid() {
   for (let i = 0; i < rows; i++) {
     const rowNum = `row-${i}`;
 
-    const newRow = $('<div></div>').attr('class', 'grid-row').attr('id', rowNum);
+    const newRow = $('<div></div>')
+      .attr('class', 'grid-row')
+      .attr('id', rowNum);
 
     $('#grid').append(newRow);
 
@@ -84,6 +101,6 @@ if (typeof module !== 'undefined') {
     drawNewGrid,
     drawArrows,
     updateGrid,
-    gameState,
+    updateBoard,
   };
 }
