@@ -2,7 +2,7 @@ const each = require('jest-each').default;
 
 const {
   drawArrows,
-} = require('../app_files/app');
+} = require('../app_files/browser_functions');
 const { TestResult } = require('@jest/types');
 
 test.skip('drawArrows', () => {
