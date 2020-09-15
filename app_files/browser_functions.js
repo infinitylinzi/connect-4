@@ -47,7 +47,7 @@ function updateGrid(gameState) {
   const { row } = gameState.lastPiece;
   const { col } = gameState.lastPiece;
   const position = $(`#row-${row}-column-${col}`).children('span');
-  const redOrYellow = gameState.nextTurn;
+  const redOrYellow = gameState.turn;
 
   $(position).removeClass('whitedot');
   $(position).addClass(`${redOrYellow}dot`);
@@ -93,6 +93,10 @@ function drawNewGrid() {
       $(`#row-${i}`).append(newColumn);
     }
   }
+}
+
+function updateUiWinner(winner) {
+  alert(`The winner is ${winner}`);
 }
 
 if (typeof module !== 'undefined') {

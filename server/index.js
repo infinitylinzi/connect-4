@@ -5,7 +5,7 @@ const {
   whoseTurn,
   placePiece,
   nextTurn,
-  checkIfWinner,
+  checkForWinner,
 } = require('./server_functions');
 const { getFormSize } = require('../app_files/browser_functions');
 
@@ -13,7 +13,7 @@ let gameState = {
   rows: 0,
   cols: 0,
   boardArray: [],
-  nextTurn: 'red',
+  turn: 'red',
   scoreRed: 0,
   scoreYellow: 0,
   gameId: 1,
@@ -21,6 +21,7 @@ let gameState = {
     row: 0,
     col: 0,
   },
+  winner: null,
 };
 
 const app = express();
@@ -33,6 +34,10 @@ app.get('/', (req, res) => {
 });
 
 app.get('/state', (req, res) => {
+  res.json(gameState);
+});
+
+app.get('/winner', (req, res) => {
   res.json(gameState);
 });
 

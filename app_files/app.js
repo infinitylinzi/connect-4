@@ -47,6 +47,13 @@ $(document).ready(() => {
         contentType: 'application/json',
         success: (res) => {
           updateGrid(res);
+          $.get('/winner', (data) => {
+            gameState = data;
+            console.log(gameState.winner);
+            if (gameState.winner) {
+              updateUiWinner(gameState.winner);
+            }
+          });
         },
         error: (res) => {
           // eslint-disable-next-line no-console
@@ -55,6 +62,7 @@ $(document).ready(() => {
       });
     });
   }
+
 
   //   // add event listener to reset button
   //   $("#reset-btn").click(getFormSize);
