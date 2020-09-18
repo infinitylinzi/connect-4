@@ -2,45 +2,39 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-plusplus */
 
-// const gameState = {
-//   boardArray: [],
-//   nextTurn: 'red',
-//   scoreRed: 0,
-//   scoreYellow: 0,
-//   gameId: 1,
-// };
-
-// client
-function updateBoard(gameState) {
-  const { row } = gameState.lastPiece;
-  const { col } = gameState.lastPiece;
-
-  updateGrid(gameState, row, col);
-}
-
 function getFormSize(gameState) {
   const userInputRows = $('select#rows').val();
   const userInputCols = $('select#columns').val();
   const localGameState = gameState;
   localGameState.boardArray = [];
 
+  removeGrid();
   const boardArray = setBoardArray(localGameState, userInputRows, userInputCols);
-  drawNewGrid();
-  drawArrows();
+  drawNewGrid(boardArray);
+  drawArrows(userInputCols);
   return { boardArray, userInputRows, userInputCols };
 }
 
+function removeGrid() {
+  $('.grid-row').remove('div.grid-column');
+  $('#grid').remove('div.grid-row');
+  console.log($('#grid'));
+  $('.grid-row').remove('span.arrow-grid');
+}
+
 function setBoardArray(gameState, rows, cols) {
-  const { boardArray } = gameState;
+  const localGameState = gameState;
+
+  localGameState.boardArray = [];
 
   for (let i = 0; i < rows; i++) {
-    boardArray.push([]);
+    localGameState.boardArray.push([]);
     for (let j = 0; j < cols; j++) {
-      boardArray[i].push(null);
+      localGameState.boardArray[i].push(null);
     }
   }
   // send this somewhere.... needs to go back to the server to update gamestate
-  return boardArray;
+  return localGameState.boardArray;
 }
 
 function updateGrid(gameState) {
@@ -53,9 +47,7 @@ function updateGrid(gameState) {
   $(position).addClass(`${redOrYellow}dot`);
 }
 
-function drawArrows() {
-  const columns = gameState.boardArray[0].length;
-
+function drawArrows(columns) {
   // $('.grid-row').remove('span.arrow-grid');
 
   for (let i = 0; i < columns; i++) {
@@ -67,9 +59,9 @@ function drawArrows() {
 }
 // make grid of size x by y
 
-function drawNewGrid() {
-  const rows = gameState.boardArray.length;
-  const columns = gameState.boardArray[0].length;
+function drawNewGrid(boardArray) {
+  const rows = boardArray.length;
+  const columns = boardArray[0].length;
 
   // console.log($('#grid')[0].childNodes);
   // $('#grid').remove('div.grid-row');
@@ -95,8 +87,39 @@ function drawNewGrid() {
   }
 }
 
-function updateUiWinner(winner) {
+function updateUiTurn(turn) {
+  // change outline counter
+  if (turn === 'red') {
+    $('.circle-yellow').removeClass('turn-outline');
+    $('.circle-red').addClass('turn-outline');
+  } else {
+    $('.circle-red').removeClass('turn-outline');
+    $('.circle-yellow').addClass('turn-outline');
+  }
+}
+
+function updateUiWinner(gameState) {
+  const { winner } = gameState;
+  const redScore = gameState.scoreRed;
+  const yellowScore = gameState.scoreYellow;
   alert(`The winner is ${winner}`);
+  // update score
+  $('.red-score').text(`Red: ${redScore} `);
+  $('.yellow-score').text(`Yellow: ${yellowScore} `);
+}
+
+function newGame(gameState) {
+  const localGameState = gameState;
+  const formSize = getFormSize(gameState);
+  localGameState.boardArray = formSize.boardArray;
+  localGameState.rows = formSize.userInputRows;
+  localGameState.cols = formSize.userInputCols;
+  localGameState.gameId += 1;
+  localGameState.lastPiece.row = 0;
+  localGameState.lastPiece.col = 0;
+  localGameState.winner = null;
+
+  return localGameState;
 }
 
 if (typeof module !== 'undefined') {
@@ -105,6 +128,9 @@ if (typeof module !== 'undefined') {
     drawNewGrid,
     drawArrows,
     updateGrid,
-    updateBoard,
+    updateUiWinner,
+    updateUiTurn,
+    setBoardArray,
+    newGame,
   };
 }

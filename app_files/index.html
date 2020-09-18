@@ -59,8 +59,8 @@
         <div class="row" id="heading">
           <h1 class="display-2 mt-3">Connect 4</h1>
           <h2 class="display-4">
-            <span class="text-danger">Red: 2 </span>|
-            <span class="text-warning">Yellow: 4</span>
+            <span class="text-danger red-score">Red: 0 </span>|
+            <span class="text-warning yellow-score">Yellow: 0 </span>
           </h2>
         </div>
 
@@ -81,12 +81,12 @@
         <!--radio buttons to indicate turn-->
         <div class="row p-4" id="buttons">
           <div class="row p-3 d-inline-flex justify-content-around">
-            <span class="circle-red"></span>
+            <span class="circle-red turn-outline"></span>
             <span class="circle-yellow"></span>
           </div>
           <!--reset/play again-->
           <div class="row d-inline-flex justify-content-around my-3">
-            <button class="btn btn-lg btn-primary">New Game</button>
+            <button class="btn btn-lg btn-primary" id="new-game-btn">New Game</button>
             <button class="btn btn-lg btn-primary" id="reset-btn">Reset</button>
           </div>
         </div>

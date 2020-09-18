@@ -1,7 +1,7 @@
 let gameState = {};
 
 /* eslint-disable no-plusplus */
-$(document).ready(() => {
+$(() => {
   //   event.preventDefault();
   $.get('/state', (data) => {
     gameState = data;
@@ -32,7 +32,6 @@ $(document).ready(() => {
   //   });
 
   const arrowButtons = $('.arrow-grid');
-  // const arrowArray = Array.from(arrowButtons);
 
   for (let i = 0; i < arrowButtons.length; i++) {
     // eslint-disable-next-line no-loop-func
@@ -46,12 +45,14 @@ $(document).ready(() => {
         data: JSON.stringify(body),
         contentType: 'application/json',
         success: (res) => {
-          updateGrid(res);
+          gameState = res;
+          updateGrid(gameState);
           $.get('/winner', (data) => {
             gameState = data;
-            console.log(gameState.winner);
             if (gameState.winner) {
-              updateUiWinner(gameState.winner);
+              updateUiWinner(gameState);
+            } else {
+              updateUiTurn(gameState.turn);
             }
           });
         },
@@ -63,7 +64,17 @@ $(document).ready(() => {
     });
   }
 
+  $('#new-game-btn').click(() => {
+    gameState = newGame(gameState);
 
+    body.boardArray = gameState.boardArray;
+    body.rows = gameState.rows;
+    body.cols = gameState.cols;
+    body.gameId = gameState.gameId;
+    body.lastPiece = gameState.lastPiece;
+    body.winner = gameState.winner;
+    console.log(body);
+  });
   //   // add event listener to reset button
   //   $("#reset-btn").click(getFormSize);
 });

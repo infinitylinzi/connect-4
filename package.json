@@ -2,7 +2,7 @@
   "name": "connect-4",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server/index.js",
   "scripts": {
     "test": "jest"
   },
@@ -31,5 +31,16 @@
     "setupFiles": [
       "./setupJest.js"
     ]
-  }
+  },
+  "overrides": [
+    {
+        "files": ["*.test.js"],
+        "env": {
+            "jest": true
+        },
+        "globals": {
+            "fetchMock": "readonly"
+        }
+    }
+]
 }

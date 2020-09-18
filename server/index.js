@@ -38,6 +38,15 @@ app.get('/state', (req, res) => {
 });
 
 app.get('/winner', (req, res) => {
+  const position = gameState.lastPiece;
+  gameState.winner = checkForWinner(gameState, position.row, position.col, gameState.rows);
+  const { winner } = gameState;
+
+  if (winner === 'red') {
+    gameState.scoreRed += 1;
+  } else if (winner === 'yellow') {
+    gameState.scoreYellow += 1;
+  }
   res.json(gameState);
 });
 
