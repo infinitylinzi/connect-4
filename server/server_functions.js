@@ -2,12 +2,12 @@
 
 const e = require('express');
 
-function whoseTurn(gameState) {
+const whoseTurn = (gameState) => {
   const localGameState = gameState;
   return localGameState.turn;
-}
+};
 
-function placePiece(gameState, columnSelected) {
+const placePiece = (gameState, columnSelected) => {
   const localGameState = gameState;
   const redOrYellow = whoseTurn(localGameState);
   let otherPlayer = '';
@@ -41,9 +41,9 @@ function placePiece(gameState, columnSelected) {
   localGameState.lastPiece.row = rows - 1;
   localGameState.lastPiece.col = colNum;
   return localGameState;
-}
+};
 
-function nextTurn(gameState) {
+const nextTurn = (gameState) => {
   const localGameState = gameState;
   if (localGameState.turn === 'red') {
     localGameState.turn = 'yellow';
@@ -51,47 +51,153 @@ function nextTurn(gameState) {
     localGameState.turn = 'red';
   }
   return localGameState.turn;
-}
+};
 
-function checkForWinner(gameState, row, col, totalCols) {
+const checkForWinner = (gameState, row, col, totalCols) => {
   const localGameState = gameState;
+  const board = localGameState.boardArray;
   const totalRows = localGameState.boardArray.length;
   const currentRow = localGameState.boardArray[row];
+  const positionColumn = col;
   // horizontal win
   for (let i = 0; i < currentRow.length - 3; i++) {
     if (currentRow[i] === 'red' && currentRow[i + 1] === 'red' && currentRow[i + 2] === 'red' && currentRow[i + 3] === 'red') {
       localGameState.winner = 'red';
-
       return localGameState.winner;
     }
 
     if (currentRow[i] === 'yellow' && currentRow[i + 1] === 'yellow' && currentRow[i + 2] === 'yellow' && currentRow[i + 3] === 'yellow') {
       localGameState.winner = 'yellow';
-
       return localGameState.winner;
     }
   }
   // vertical win
   for (let i = 0; i < totalRows - 3; i++) {
-    if (gameState.boardArray[i][col] === 'red' && gameState.boardArray[i + 1][col] === 'red' && gameState.boardArray[i + 2][col] === 'red' && gameState.boardArray[i + 3][col] === 'red') {
+    if (board[i][positionColumn] === 'red' && board[i + 1][positionColumn] === 'red' && board[i + 2][positionColumn] === 'red' && board[i + 3][positionColumn] === 'red') {
       localGameState.winner = 'red';
-
       return localGameState.winner;
     }
 
-    if (gameState.boardArray[i][col] === 'yellow' && gameState.boardArray[i + 1][col] === 'yellow' && gameState.boardArray[i + 2][col] === 'yellow' && gameState.boardArray[i + 3][col] === 'yellow') {
+    if (board[i][positionColumn] === 'yellow' && board[i + 1][positionColumn] === 'yellow' && board[i + 2][positionColumn] === 'yellow' && board[i + 3][positionColumn] === 'yellow') {
       localGameState.winner = 'yellow';
-
       return localGameState.winner;
     }
   }
-  // use winner to increment score in gamestate (server)
-  // send winner to browser to display win banner, update UI
   // diagonal win
+  const positionRow = row;
+  const maxCols = totalCols;
+  const maxRows = totalRows - 1;
+  const topLeftArray = [];
+  const bottomLeftArray = [];
+
+  // // make an array
+  // // starting position = currentrow, currentcol
+
+  // // move -1 col, -1 row until
+
+  // // bl-tr
+  // // array from col0 or rowmax to row0 or colmax
+  // // move +1row +1col, push position to array
+  let positionToCheckRow = positionRow - 1;
+  let positionToCheckColumn = positionColumn + 1;
+
+  while (positionToCheckRow < maxRows && positionToCheckColumn > 0) {
+    positionToCheckRow += 1;
+    positionToCheckColumn -= 1;
+  }
+
+  while (positionToCheckRow > 0 && positionToCheckColumn < maxCols) {
+    bottomLeftArray.push({ row: positionToCheckRow, col: positionToCheckColumn });
+    positionToCheckRow -= 1;
+    positionToCheckColumn += 1;
+  }
+
+  if (bottomLeftArray.length > 3) {
+    const arrayToCheck = [];
+    for (let i = 0; i < bottomLeftArray.length; i++) {
+      const rowPosition = bottomLeftArray[i].row;
+      const columnPosition = bottomLeftArray[i].col;
+      arrayToCheck.push(board[rowPosition][columnPosition]);
+    }
+    let count = 0;
+    for (let i = 0; i < arrayToCheck.length; i++) {
+      if (arrayToCheck[i] === 'red' && arrayToCheck[i + 1] === 'red') {
+        count += 1;
+        if (count === 4) {
+          localGameState.winner = 'red';
+          count = 0;
+          return localGameState.winner;
+        }
+      }
+    }
+
+    for (let i = 0; i < arrayToCheck.length; i++) {
+      if (arrayToCheck[i] === 'yellow' && arrayToCheck[i + 1] === 'yellow') {
+        count += 1;
+        if (count === 4) {
+          localGameState.winner = 'yellow';
+          count = 0;
+          return localGameState.winner;
+        }
+      }
+    }
+  }
+
+  positionToCheckRow = positionRow;
+  positionToCheckColumn = positionColumn;
+
+  // // move -1 col, -1 row until
+
+  // // tl-br
+  // // array from col0 or row0 to colmax or rowmax
+  // // move +1 row, +1 col, push position to array
+  while (positionToCheckRow > 0 && positionToCheckColumn > 0) {
+    positionToCheckRow -= 1;
+    positionToCheckColumn -= 1;
+  }
+
+  while (positionToCheckRow < maxRows && positionToCheckColumn < maxCols) {
+    topLeftArray.push({ row: positionToCheckRow, col: positionToCheckColumn });
+    positionToCheckRow += 1;
+    positionToCheckColumn += 1;
+  }
+
+  // // if array.length < 4 return
+  if (topLeftArray.length > 3) {
+    const arrayToCheck = [];
+    for (let i = 0; i < topLeftArray.length; i++) {
+      const rowPosition = topLeftArray[i].row;
+      const columnPosition = topLeftArray[i].col;
+      arrayToCheck.push(board[rowPosition][columnPosition]);
+    }
+    let count = 0;
+    for (let i = 0; i < arrayToCheck.length; i++) {
+      if (arrayToCheck[i] === 'red' && arrayToCheck[i + 1] === 'red') {
+        count += 1;
+        if (count === 4) {
+          localGameState.winner = 'red';
+          count = 0;
+          return localGameState.winner;
+        }
+      }
+    }
+
+    for (let i = 0; i < arrayToCheck.length; i++) {
+      if (arrayToCheck[i] === 'yellow' && arrayToCheck[i + 1] === 'yellow') {
+        count += 1;
+        if (count === 4) {
+          localGameState.winner = 'yellow';
+          count = 0;
+          return localGameState.winner;
+        }
+      }
+    }
+  }
+  // check array for four in a row as above
+
   localGameState.winner = null;
-  localGameState.turn = nextTurn(localGameState);
   return localGameState.winner;
-}
+};
 
 if (typeof module !== 'undefined') {
   module.exports = {

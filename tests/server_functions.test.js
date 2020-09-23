@@ -77,7 +77,8 @@ test('when arrow button clicked, piece is placed in last empty space', () => {
   };
   const column = 0;
   // jest.spyOn(server_functions, 'whoseTurn').mockReturnValue('yellow');
-  // jest.spyOn(server_functions, 'whoseTurn').mockImplementation(() => { console.log('spy called'); return 'yellow'; });
+  // jest.spyOn(server_functions, 'whoseTurn').mockImplementation(() => {
+  // console.log('spy called'); return 'yellow'; });
   const expectedOutput = {
     rows: 0,
     cols: 0,

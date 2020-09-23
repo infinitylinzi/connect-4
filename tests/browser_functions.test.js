@@ -57,7 +57,7 @@ test('Board array in the browser matches board array in the server', () => {
   expect(actualOutput).toEqual(expectedOutput);
 });
 
-test('the gamestate is reset to start a new game', () => {
+test.skip('the gamestate is reset to start a new game', () => {
   // Arrange
   const gameState = {
     rows: 6,
@@ -80,8 +80,16 @@ test('the gamestate is reset to start a new game', () => {
     },
     winner: 'red',
   };
+
+  // what do I need to do with these???
   const userInputRows = jquery.mockReturnValue(6);
   const userInputCols = jquery.mockReturnValue(7);
+
+  const mockSetBoardArray = jest.fn().mockImplementation;
+  //   jest.mockImplementation(setBoardArray(gameState, userInputRows, userInputCols) => {
+
+  //   })
+
   const expectedOutput = {
     rows: 6,
     cols: 7,

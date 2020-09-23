@@ -39,7 +39,8 @@ app.get('/state', (req, res) => {
 
 app.get('/winner', (req, res) => {
   const position = gameState.lastPiece;
-  gameState.winner = checkForWinner(gameState, position.row, position.col, gameState.rows);
+  gameState.winner = checkForWinner(gameState, position.row, position.col, gameState.cols);
+  gameState.nextTurn = nextTurn(gameState);
   const { winner } = gameState;
 
   if (winner === 'red') {
@@ -54,6 +55,19 @@ app.post('/board', (req, res) => {
   gameState.boardArray = req.body.boardArray;
   gameState.rows = parseInt(req.body.rows, 10);
   gameState.cols = parseInt(req.body.cols, 10);
+  res.json(gameState);
+});
+
+app.post('/board-reset', (req, res) => {
+  gameState.boardArray = req.body.boardArray;
+  gameState.rows = parseInt(req.body.rows, 10);
+  gameState.cols = parseInt(req.body.cols, 10);
+  gameState.gameId = parseInt(req.body.gameId, 10);
+  gameState.lastPiece = req.body.lastPiece;
+  gameState.winner = req.body.winner;
+  gameState.turn = req.body.turn;
+  gameState.scoreRed = parseInt(req.body.scoreRed, 10);
+  gameState.scoreYellow = parseInt(req.body.scoreYellow, 10);
   res.json(gameState);
 });
 

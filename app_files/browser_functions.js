@@ -16,10 +16,8 @@ function getFormSize(gameState) {
 }
 
 function removeGrid() {
-  $('.grid-row').remove('div.grid-column');
-  $('#grid').remove('div.grid-row');
-  console.log($('#grid'));
-  $('.grid-row').remove('span.arrow-grid');
+  $('#grid').empty();
+  $('.grid-row').empty();
 }
 
 function setBoardArray(gameState, rows, cols) {
@@ -37,7 +35,7 @@ function setBoardArray(gameState, rows, cols) {
   return localGameState.boardArray;
 }
 
-function updateGrid(gameState) {
+const updateGrid = (gameState) => {
   const { row } = gameState.lastPiece;
   const { col } = gameState.lastPiece;
   const position = $(`#row-${row}-column-${col}`).children('span');
@@ -45,21 +43,21 @@ function updateGrid(gameState) {
 
   $(position).removeClass('whitedot');
   $(position).addClass(`${redOrYellow}dot`);
-}
+};
 
-function drawArrows(columns) {
+const drawArrows = (columns) => {
   // $('.grid-row').remove('span.arrow-grid');
 
   for (let i = 0; i < columns; i++) {
-    const arrowButton = $("<span class='arrow-grid'></span").append(
+    const arrowButton = $(`<span id='arrow-${i}' class='arrow-grid'></span`).append(
       "<i class='fas fa-arrow-alt-circle-down fa-2x arrow-colour'></i>",
     );
     $('#arrow-buttons').append(arrowButton);
   }
-}
+};
 // make grid of size x by y
 
-function drawNewGrid(boardArray) {
+const drawNewGrid = (boardArray) => {
   const rows = boardArray.length;
   const columns = boardArray[0].length;
 
@@ -85,9 +83,9 @@ function drawNewGrid(boardArray) {
       $(`#row-${i}`).append(newColumn);
     }
   }
-}
+};
 
-function updateUiTurn(turn) {
+const updateUiTurn = (turn) => {
   // change outline counter
   if (turn === 'red') {
     $('.circle-yellow').removeClass('turn-outline');
@@ -96,9 +94,9 @@ function updateUiTurn(turn) {
     $('.circle-red').removeClass('turn-outline');
     $('.circle-yellow').addClass('turn-outline');
   }
-}
+};
 
-function updateUiWinner(gameState) {
+const updateUiWinner = (gameState) => {
   const { winner } = gameState;
   const redScore = gameState.scoreRed;
   const yellowScore = gameState.scoreYellow;
@@ -106,9 +104,9 @@ function updateUiWinner(gameState) {
   // update score
   $('.red-score').text(`Red: ${redScore} `);
   $('.yellow-score').text(`Yellow: ${yellowScore} `);
-}
+};
 
-function newGame(gameState) {
+const newGame = (gameState) => {
   const localGameState = gameState;
   const formSize = getFormSize(gameState);
   localGameState.boardArray = formSize.boardArray;
@@ -120,7 +118,7 @@ function newGame(gameState) {
   localGameState.winner = null;
 
   return localGameState;
-}
+};
 
 if (typeof module !== 'undefined') {
   module.exports = {
