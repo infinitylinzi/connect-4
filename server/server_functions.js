@@ -1,25 +1,15 @@
 /* eslint-disable no-plusplus */
 
-// const { gameState } = require("./browser_functions");
+const e = require('express');
 
-function setBoardArray(gameState, rows, cols) {
-  const { boardArray } = gameState;
+const whoseTurn = (gameState) => {
+  const localGameState = gameState;
+  return localGameState.turn;
+};
 
-  for (let i = 0; i < rows; i++) {
-    boardArray.push([]);
-    for (let j = 0; j < cols; j++) {
-      boardArray[i].push(null);
-    }
-  }
-}
-
-function whoseTurn(gameState) {
-  return gameState.nextTurn;
-}
-
-function placePiece(gameState, columnSelected) {
-  const redOrYellow = whoseTurn(gameState);
-
+const placePiece = (gameState, columnSelected) => {
+  const localGameState = gameState;
+  const redOrYellow = whoseTurn(localGameState);
   let otherPlayer = '';
   if (redOrYellow === 'red') {
     otherPlayer = 'yellow';
@@ -28,80 +18,192 @@ function placePiece(gameState, columnSelected) {
   }
 
   const colNum = columnSelected;
-  const rows = gameState.boardArray.length;
-  const cols = gameState.boardArray[0].length;
+  const rows = localGameState.boardArray.length;
+  const cols = localGameState.boardArray[0].length;
 
   for (let i = 0; i < rows - 1; i++) {
-    const nextSpace = gameState.boardArray[i + 1][colNum];
+    const nextSpace = localGameState.boardArray[i + 1][colNum];
     if (nextSpace === redOrYellow || nextSpace === otherPlayer) {
-      gameState.boardArray[i][colNum] = redOrYellow;
-      // updateGrid(i + 1, colNum);
-      checkIfWinner(gameState, i + 1, colNum, cols);
-      nextTurn(gameState);
-      return gameState;
+      localGameState.boardArray[i][colNum] = redOrYellow;
+      // localGameState.winner = checkForWinner(localGameState, i + 1, colNum, cols);
+      // localGameState.turn = nextTurn(localGameState);
+      localGameState.lastPiece.row = i;
+      localGameState.lastPiece.col = colNum;
+      return localGameState;
     }
   }
 
-  const lastRow = gameState.boardArray[rows - 1];
+  const lastRow = localGameState.boardArray[rows - 1];
   lastRow[colNum] = redOrYellow;
-  // updateGrid(rows, colNum);
-  checkIfWinner(gameState, rows, colNum, cols);
-  nextTurn(gameState);
-  return gameState;
-}
 
-function nextTurn(gameState) {
-  if (gameState.nextTurn === 'red') {
-    gameState.nextTurn = 'yellow';
+  // localGameState.winner = checkForWinner(localGameState, rows, colNum, cols);
+  // localGameState.turn = nextTurn(localGameState);
+  localGameState.lastPiece.row = rows - 1;
+  localGameState.lastPiece.col = colNum;
+  return localGameState;
+};
+
+const nextTurn = (gameState) => {
+  const localGameState = gameState;
+  if (localGameState.turn === 'red') {
+    localGameState.turn = 'yellow';
   } else {
-    gameState.nextTurn = 'red';
+    localGameState.turn = 'red';
   }
-}
+  return localGameState.turn;
+};
 
-function checkIfWinner(gameState, row, col, totalCols) {
-  const totalRows = gameState.boardArray.length;
-  const currentRow = gameState.boardArray[row - 1];
-  console.log(row);
-  let winner;
-
+const checkForWinner = (gameState, row, col, totalCols) => {
+  const localGameState = gameState;
+  const board = localGameState.boardArray;
+  const totalRows = localGameState.boardArray.length;
+  const currentRow = localGameState.boardArray[row];
+  const positionColumn = col;
   // horizontal win
   for (let i = 0; i < currentRow.length - 3; i++) {
     if (currentRow[i] === 'red' && currentRow[i + 1] === 'red' && currentRow[i + 2] === 'red' && currentRow[i + 3] === 'red') {
-      winner = 'red';
-      console.log('Winner is red');
-      return winner;
+      localGameState.winner = 'red';
+      return localGameState.winner;
     }
 
     if (currentRow[i] === 'yellow' && currentRow[i + 1] === 'yellow' && currentRow[i + 2] === 'yellow' && currentRow[i + 3] === 'yellow') {
-      winner = 'yellow';
-      console.log('Winner is yellow');
-      return winner;
+      localGameState.winner = 'yellow';
+      return localGameState.winner;
     }
   }
   // vertical win
   for (let i = 0; i < totalRows - 3; i++) {
-    if (gameState.boardArray[i][col] === 'red' && gameState.boardArray[i + 1][col] === 'red' && gameState.boardArray[i + 2][col] === 'red' && gameState.boardArray[i + 3][col] === 'red') {
-      winner = 'red';
-      console.log('Winner is red');
-      return winner;
+    if (board[i][positionColumn] === 'red' && board[i + 1][positionColumn] === 'red' && board[i + 2][positionColumn] === 'red' && board[i + 3][positionColumn] === 'red') {
+      localGameState.winner = 'red';
+      return localGameState.winner;
     }
 
-    if (gameState.boardArray[i][col] === 'yellow' && gameState.boardArray[i + 1][col] === 'yellow' && gameState.boardArray[i + 2][col] === 'yellow' && gameState.boardArray[i + 3][col] === 'yellow') {
-      winner = 'yellow';
-      console.log('Winner is yellow');
-      return winner;
+    if (board[i][positionColumn] === 'yellow' && board[i + 1][positionColumn] === 'yellow' && board[i + 2][positionColumn] === 'yellow' && board[i + 3][positionColumn] === 'yellow') {
+      localGameState.winner = 'yellow';
+      return localGameState.winner;
+    }
+  }
+  // diagonal win
+  const positionRow = row;
+  const maxCols = totalCols;
+  const maxRows = totalRows - 1;
+  const topLeftArray = [];
+  const bottomLeftArray = [];
+
+  // // make an array
+  // // starting position = currentrow, currentcol
+
+  // // move -1 col, -1 row until
+
+  // // bl-tr
+  // // array from col0 or rowmax to row0 or colmax
+  // // move +1row +1col, push position to array
+  let positionToCheckRow = positionRow - 1;
+  let positionToCheckColumn = positionColumn + 1;
+
+  while (positionToCheckRow < maxRows && positionToCheckColumn > 0) {
+    positionToCheckRow += 1;
+    positionToCheckColumn -= 1;
+  }
+
+  while (positionToCheckRow > 0 && positionToCheckColumn < maxCols) {
+    bottomLeftArray.push({ row: positionToCheckRow, col: positionToCheckColumn });
+    positionToCheckRow -= 1;
+    positionToCheckColumn += 1;
+  }
+
+  if (bottomLeftArray.length > 3) {
+    const arrayToCheck = [];
+    for (let i = 0; i < bottomLeftArray.length; i++) {
+      const rowPosition = bottomLeftArray[i].row;
+      const columnPosition = bottomLeftArray[i].col;
+      arrayToCheck.push(board[rowPosition][columnPosition]);
+    }
+    let count = 0;
+    for (let i = 0; i < arrayToCheck.length; i++) {
+      if (arrayToCheck[i] === 'red' && arrayToCheck[i + 1] === 'red') {
+        count += 1;
+        if (count === 4) {
+          localGameState.winner = 'red';
+          count = 0;
+          return localGameState.winner;
+        }
+      }
+    }
+
+    for (let i = 0; i < arrayToCheck.length; i++) {
+      if (arrayToCheck[i] === 'yellow' && arrayToCheck[i + 1] === 'yellow') {
+        count += 1;
+        if (count === 4) {
+          localGameState.winner = 'yellow';
+          count = 0;
+          return localGameState.winner;
+        }
+      }
     }
   }
 
-  // diagonal win
-}
+  positionToCheckRow = positionRow;
+  positionToCheckColumn = positionColumn;
+
+  // // move -1 col, -1 row until
+
+  // // tl-br
+  // // array from col0 or row0 to colmax or rowmax
+  // // move +1 row, +1 col, push position to array
+  while (positionToCheckRow > 0 && positionToCheckColumn > 0) {
+    positionToCheckRow -= 1;
+    positionToCheckColumn -= 1;
+  }
+
+  while (positionToCheckRow < maxRows && positionToCheckColumn < maxCols) {
+    topLeftArray.push({ row: positionToCheckRow, col: positionToCheckColumn });
+    positionToCheckRow += 1;
+    positionToCheckColumn += 1;
+  }
+
+  // // if array.length < 4 return
+  if (topLeftArray.length > 3) {
+    const arrayToCheck = [];
+    for (let i = 0; i < topLeftArray.length; i++) {
+      const rowPosition = topLeftArray[i].row;
+      const columnPosition = topLeftArray[i].col;
+      arrayToCheck.push(board[rowPosition][columnPosition]);
+    }
+    let count = 0;
+    for (let i = 0; i < arrayToCheck.length; i++) {
+      if (arrayToCheck[i] === 'red' && arrayToCheck[i + 1] === 'red') {
+        count += 1;
+        if (count === 4) {
+          localGameState.winner = 'red';
+          count = 0;
+          return localGameState.winner;
+        }
+      }
+    }
+
+    for (let i = 0; i < arrayToCheck.length; i++) {
+      if (arrayToCheck[i] === 'yellow' && arrayToCheck[i + 1] === 'yellow') {
+        count += 1;
+        if (count === 4) {
+          localGameState.winner = 'yellow';
+          count = 0;
+          return localGameState.winner;
+        }
+      }
+    }
+  }
+  // check array for four in a row as above
+
+  localGameState.winner = null;
+  return localGameState.winner;
+};
 
 if (typeof module !== 'undefined') {
   module.exports = {
-    setBoardArray,
     whoseTurn,
     placePiece,
     nextTurn,
-    checkIfWinner,
+    checkForWinner,
   };
 }
