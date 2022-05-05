@@ -55,7 +55,7 @@ h1 {
   .yellowdot {
     height: 2rem;
     width: 2rem;
-    background-color: yellow;
+    background-color: #ffbb33;
     border-radius: 50%;
   }
 
@@ -70,7 +70,7 @@ h1 {
   .circle-yellow {
     height: 3.8rem;
     width: 3.8rem;
-    background-color: yellow;
+    background-color: #ffbb33;
     border-radius: 50%;
   }
 
@@ -88,4 +88,14 @@ h1 {
   .arrow-colour:hover {
       color: red;
     /* color: yellow; */
+  }
+
+  .red-wins {
+    color: red;
+    display: none;
+  }
+
+  .yellow-wins {
+    color: #ffbb33;
+    display: none;
   }

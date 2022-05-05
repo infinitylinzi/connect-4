@@ -123,7 +123,7 @@ const checkForWinner = (gameState, row, col, totalCols) => {
     for (let i = 0; i < arrayToCheck.length; i++) {
       if (arrayToCheck[i] === 'red' && arrayToCheck[i + 1] === 'red') {
         count += 1;
-        if (count === 4) {
+        if (count === 3) {
           localGameState.winner = 'red';
           count = 0;
           return localGameState.winner;
@@ -134,7 +134,7 @@ const checkForWinner = (gameState, row, col, totalCols) => {
     for (let i = 0; i < arrayToCheck.length; i++) {
       if (arrayToCheck[i] === 'yellow' && arrayToCheck[i + 1] === 'yellow') {
         count += 1;
-        if (count === 4) {
+        if (count === 3) {
           localGameState.winner = 'yellow';
           count = 0;
           return localGameState.winner;
@@ -174,7 +174,7 @@ const checkForWinner = (gameState, row, col, totalCols) => {
     for (let i = 0; i < arrayToCheck.length; i++) {
       if (arrayToCheck[i] === 'red' && arrayToCheck[i + 1] === 'red') {
         count += 1;
-        if (count === 4) {
+        if (count === 3) {
           localGameState.winner = 'red';
           count = 0;
           return localGameState.winner;
@@ -185,7 +185,7 @@ const checkForWinner = (gameState, row, col, totalCols) => {
     for (let i = 0; i < arrayToCheck.length; i++) {
       if (arrayToCheck[i] === 'yellow' && arrayToCheck[i + 1] === 'yellow') {
         count += 1;
-        if (count === 4) {
+        if (count === 3) {
           localGameState.winner = 'yellow';
           count = 0;
           return localGameState.winner;

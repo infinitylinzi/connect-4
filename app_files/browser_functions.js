@@ -100,7 +100,10 @@ const updateUiWinner = (gameState) => {
   const { winner } = gameState;
   const redScore = gameState.scoreRed;
   const yellowScore = gameState.scoreYellow;
-  alert(`The winner is ${winner}`);
+  $(`.${winner}-wins`).show();
+  setTimeout(() => {
+    $(`.${winner}-wins`).hide();
+  }, 2000);
   // update score
   $('.red-score').text(`Red: ${redScore} `);
   $('.yellow-score').text(`Yellow: ${yellowScore} `);
